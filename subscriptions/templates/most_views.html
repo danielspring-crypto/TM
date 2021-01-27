@@ -1,0 +1,83 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Django + Stripe Subscriptions</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="{% static 'main.js' %}"></script>
+    <style type="text/css">
+      body{
+        color: #123456;
+      }
+    </style>
+  </head> 
+  <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'subscriptions-home' %}">သုတကြေးမုံ</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'subscriptions-home' %}">ဂျာနယ်အားလုံး</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'most_views' %}">
+            လူကြိုက်များသောဂျာနယ်များ
+          </a>
+        </li>
+      </ul>
+      </div>
+
+  </div>
+</nav>
+
+<br>
+    <div class="container">
+        <div class="card btn btn-warning" style="width: 18rem;">
+          <div class="card-body">
+            <b>My Plan </b><button class="btn btn-danger">
+              5$/month
+            </button><br>
+            <small>Your Name : {{ user.username }}</small>
+
+          </div>
+        </div>
+        <hr>
+<!--         {% if tag %}
+        <h2> tagged with "{{ tag.name }}"</h2>
+        {% endif %} -->
+        {% for x in views %}
+        
+          Name : <a href="{% url 'detail' x.id %}">{{ x.name }}</a>
+          <br>
+          <b>category : {{ x.category }}</b><br>
+          <p>Hashtags: {{ x.tags.all|join:", " }}</p>
+<!--           {% for tag in x.tags.all %}
+            <a href="{% url 'post_list_by_tag' tag.slug %}">
+            {{ tag.name }}
+            </a>
+            {% if not forloop.last %}, {% endif %}
+          {% endfor %}<br> -->
+          uploaded {{ x.date|timesince }} ago
+          <hr>
+
+        {% endfor %}
+      
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </body>
+</html>
